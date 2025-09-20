@@ -1,0 +1,32 @@
+<div class="chat-container">
+  <div class="chat-card">
+    <div class="chat-header">
+      <h2>AI Chat Interface</h2>
+      <button class="clear-button" (click)="clearChat()">Clear</button>
+    </div>
+    
+    <div class="messages-container">
+      <div class="messages" *ngIf="messages$ | async as messages">
+        <div *ngFor="let message of messages" class="message" 
+             [class.user-message]="message.role === 'user'" 
+             [class.ai-message]="message.role === 'assistant'">
+          <div class="message-content">{{ message.content }}</div>
+          <div class="message-timestamp">{{ message.timestamp | date:'short' }}</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="input-container">
+      <input type="text" 
+             class="message-input"
+             [(ngModel)]="newMessage" 
+             (keyup.enter)="sendMessage()"
+             placeholder="Type your message...">
+      <button class="send-button" 
+              (click)="sendMessage()" 
+              [disabled]="!newMessage.trim()">
+        Send
+      </button>
+    </div>
+  </div>
+</div>
